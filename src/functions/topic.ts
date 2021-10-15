@@ -1,9 +1,9 @@
-import Kafka from "node-rdkafka";
+import Kafka, { IAdminClient } from "node-rdkafka";
 import { IKafkaConfig } from "../types/IKafkaConfig";
 const ERR_TOPIC_ALREADY_EXISTS: number = 36;
 
 export async function ensureTopicExists(kafkaAdminClient: typeof Kafka.AdminClient, config: IKafkaConfig) {
-  const adminClient = kafkaAdminClient.create({
+  const adminClient: IAdminClient = kafkaAdminClient.create({
     'bootstrap.servers': config.bootstrap.servers,
     'sasl.username': config.sasl.username,
     'sasl.password': config.sasl.password,

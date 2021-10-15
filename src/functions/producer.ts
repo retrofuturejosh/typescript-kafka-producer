@@ -3,7 +3,7 @@ import { IKafkaConfig } from "../types/IKafkaConfig";
 import Kafka from 'node-rdkafka';
 
 export async function createProducer(kafkaProducer: typeof Kafka.Producer, config: IKafkaConfig): Promise<Producer> {
-  const producer = new kafkaProducer({
+  const producer: Producer = new kafkaProducer({
     'bootstrap.servers': config.bootstrap.servers,
     'sasl.username': config.sasl.username,
     'sasl.password': config.sasl.password,
