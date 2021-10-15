@@ -31,3 +31,6 @@ TOPIC=testTopic
 Run application
 
 ``` npm start ```
+
+### Step 6
+Set up a [Kafka Producer](https://github.com/retrofuturejosh/typescript-kafka-consumer)

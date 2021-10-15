@@ -7,24 +7,21 @@ import { createProducer } from './functions/producer';
 import config from './config';
 
 async function produceExample(): Promise<void> {
-  console.log("Let's create 10 test records, shall we?");
+  console.log("Let's create some records, shall we?");
 
   await ensureTopicExists(Kafka.AdminClient, config);
 
   const producer: Producer = await createProducer(Kafka.Producer, config);
 
-  for (let idx = 0; idx < 10; ++idx) {
+  // create record every 10 seconds, increment the count with each message
+  let count: number = 0;
+  setInterval((): void => {
     const key: string = 'testKey';
-    const value: Buffer = Buffer.from(JSON.stringify({ count: idx }));
-
+    const value: Buffer = Buffer.from(JSON.stringify({ count: count++ }));
     console.log(`Producing record ${key}\t${value}`);
+    producer.produce(config.topic, -1, value, key, Date.now());
+  }, 10000)
 
-    producer.produce(config.topic, -1, value, key);
-  }
-
-  producer.flush(10000, () => {
-    producer.disconnect();
-  });
 }
 
 produceExample();
